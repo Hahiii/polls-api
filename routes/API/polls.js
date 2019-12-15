@@ -3,10 +3,10 @@ var router = express.Router();
 const Polls = require('../models/poll');
 
 /* POST create a poll */
-router.post('/poll', function(req, res, next) {
-  res.json({
-      data: 'POST create a poll'
-  })
+router.post('/poll', function (req, res, next) {
+    res.json({
+        data: 'POST create a poll'
+    })
 });
 
 /* GET all polls */
@@ -18,9 +18,9 @@ router.get('/poll', async function (req, res, next) {
 
             console.log(polls, 'polls')
         res.status(200);
-  res.json({
+        res.json({
             data: polls
-});
+        });
     }
     catch (err) {
         res.status(500);
@@ -32,10 +32,10 @@ router.get('/poll', async function (req, res, next) {
 });
 
 /* POST vote By Id */
-router.post(' /poll/:id/vote', function(req, res, next) {
-  res.json({
-      data: 'POST vote By Id'
-  })
+router.post(' /poll/:id/vote',  function (req, res, next) {
+    res.json({
+        data: 'POST vote By Id'
+    })
 });
 
 /* GET polls By Id */
@@ -53,7 +53,7 @@ router.get('/poll/:id', async function (req, res, next) {
     }
     catch (err) {
         res.status(500);
-  res.json({
+        res.json({
             data: "Error getting the polls.!",
             error: err
         });
@@ -62,10 +62,10 @@ router.get('/poll/:id', async function (req, res, next) {
 });
 
 /* POST polls By Id */
-router.post('/poll/:id', function(req, res, next) {
-  res.json({
-      data: 'POST polls By Id'
-  })
+router.post('/poll/:id', function (req, res, next) {
+    res.json({
+        data: 'POST polls By Id'
+    })
 });
 
 /* DELETE polls By Id */
@@ -83,7 +83,7 @@ router.delete('/poll/:id', async function (req, res, next) {
     }
     catch (err) {
         res.status(500);
-  res.json({
+        res.json({
             data: "Error getting the polls.!",
             error: err
         });
@@ -91,10 +91,10 @@ router.delete('/poll/:id', async function (req, res, next) {
 });
 
 /* PUT polls By Id */
-router.put('/poll/:id', function(req, res, next) {
-  res.json({
-      data: 'PUT polls By Id'
-  })
+router.put('/poll/:id', function (req, res, next) {
+    res.json({
+        data: 'PUT polls By Id'
+    })
 });
 
 module.exports = router;
