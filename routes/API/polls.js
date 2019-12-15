@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const Polls = require('../models/poll');
 
 /* POST create a poll */
 router.post('/poll', function(req, res, next) {
@@ -9,10 +10,25 @@ router.post('/poll', function(req, res, next) {
 });
 
 /* GET all polls */
-router.get('/poll', function(req, res, next) {
+router.get('/poll', async function (req, res, next) {
+    try {
+        const polls = await Polls.find()
+            .sort({ createdAt: 1 })
+            .exec();
+
+            console.log(polls, 'polls')
+        res.status(200);
   res.json({
-      data: 'GET all polls'
-  })
+            data: polls
+});
+    }
+    catch (err) {
+        res.status(500);
+        res.json({
+            data: "Error getting the polls.!",
+            error: err
+        });
+    }
 });
 
 /* POST vote By Id */
