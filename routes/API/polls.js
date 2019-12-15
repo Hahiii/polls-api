@@ -39,10 +39,26 @@ router.post(' /poll/:id/vote', function(req, res, next) {
 });
 
 /* GET polls By Id */
-router.get('/poll/:id', function(req, res, next) {
+router.get('/poll/:id', async function (req, res, next) {
+    try {
+        const findPollById = await Polls.findById(req.params.id)
+            .sort({ createdAt: 1 })
+            .exec();
+
+            console.log(findPollById, 'pollById')
+        res.status(200);
+        res.json({
+            data: findPollById
+        });
+    }
+    catch (err) {
+        res.status(500);
   res.json({
-      data: 'GET polls By Id'
-  })
+            data: "Error getting the polls.!",
+            error: err
+        });
+    }
+   
 });
 
 /* POST polls By Id */
