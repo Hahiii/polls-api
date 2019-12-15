@@ -69,10 +69,25 @@ router.post('/poll/:id', function(req, res, next) {
 });
 
 /* DELETE polls By Id */
-router.delete('/poll/:id', function(req, res, next) {
+router.delete('/poll/:id', async function (req, res, next) {
+    try {
+        const deletePollById = await Polls.findByIdAndDelete(req.params.id)
+            .sort({ createdAt: 1 })
+            .exec();
+
+            console.log(deletePollById, 'deletePollById 5df66ad30dc0154b63a33d74')
+        res.status(200);
+        res.json({
+            data: deletePollById
+        });
+    }
+    catch (err) {
+        res.status(500);
   res.json({
-      data: 'DELETE polls By Id'
-  })
+            data: "Error getting the polls.!",
+            error: err
+        });
+    }
 });
 
 /* PUT polls By Id */
