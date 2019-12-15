@@ -6,14 +6,13 @@ const anwserSchema = new mongoose.Schema({
             votes: { type: Number}
 })
 
-
-
-
 const pollSchema = new mongoose.Schema({
     questions: { type: String },
     anwser: [anwserSchema],
-    slug: { type: slug},
+    slug: { type: String},
     createdBy: { type: String },
-    createdAt: { type: Date, default: Data.now },
-    mmodifiedAt: { type: Date, default: Data.now }
+    createdAt: { type: Date, default: Date.now },
+    mmodifiedAt: { type: Date, default: Date.now }
 })
+
+module.exports = Poll = mongoose.model('Poll', pollSchema);
