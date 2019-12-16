@@ -30,7 +30,7 @@ router.get('/poll', async function (req, res, next) {
         
         const polls = await Poll.find()
             .where({user:'5df79b6e3b67cb1aa083a9f7'})
-            .sort({ createdAt: 1 })
+            .sort({ modifiedAt: -1 })
             .exec();
 
         console.log(polls, 'polls')
@@ -81,7 +81,7 @@ router.get('/poll/:id', async function (req, res, next) {
 /* POST polls By User Id */
 router.post('/poll/:userId', async function (req, res, next) {
     try {
-        const user = await User.findById(req.params.id).exec();
+        const user = await User.findById(req.params.userId).exec();
         req.body.user = user._id;
         const pollCreated = new Poll(req.body);
         pollCreated.save(async function (err) {
