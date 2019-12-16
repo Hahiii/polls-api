@@ -1,22 +1,36 @@
 var express = require('express');
 var router = express.Router();
-const Polls = require('../models/poll');
+const Poll = require('../models/poll');
 
 /* POST create a poll */
-router.post('/poll', function (req, res, next) {
-    res.json({
-        data: 'POST create a poll'
-    })
+router.post('/poll', async function (req, res, next) {
+    try {
+        const pollCreated = new Poll(req.body);
+        pollCreated.save(function (err) {
+            if (err) return handleError(err);
+            res.status(200);
+            res.json({
+                data: pollCreated
+            });
+        });
+    }
+    catch (err) {
+        res.status(500);
+        res.json({
+            data: 'POST create a poll failed',
+            error: err
+        })
+    }
 });
 
 /* GET all polls */
 router.get('/poll', async function (req, res, next) {
     try {
-        const polls = await Polls.find()
+        const polls = await Poll.find()
             .sort({ createdAt: 1 })
             .exec();
 
-            console.log(polls, 'polls')
+        console.log(polls, 'polls')
         res.status(200);
         res.json({
             data: polls
@@ -32,7 +46,7 @@ router.get('/poll', async function (req, res, next) {
 });
 
 /* POST vote By Id */
-router.post(' /poll/:id/vote',  function (req, res, next) {
+router.post(' /poll/:id/vote', function (req, res, next) {
     res.json({
         data: 'POST vote By Id'
     })
@@ -41,11 +55,11 @@ router.post(' /poll/:id/vote',  function (req, res, next) {
 /* GET polls By Id */
 router.get('/poll/:id', async function (req, res, next) {
     try {
-        const findPollById = await Polls.findById(req.params.id)
+        const findPollById = await Poll.findById(req.params.id)
             .sort({ createdAt: 1 })
             .exec();
 
-            console.log(findPollById, 'pollById')
+        console.log(findPollById, 'pollById')
         res.status(200);
         res.json({
             data: findPollById
@@ -58,7 +72,7 @@ router.get('/poll/:id', async function (req, res, next) {
             error: err
         });
     }
-   
+
 });
 
 /* POST polls By Id */
@@ -71,11 +85,11 @@ router.post('/poll/:id', function (req, res, next) {
 /* DELETE polls By Id */
 router.delete('/poll/:id', async function (req, res, next) {
     try {
-        const deletePollById = await Polls.findByIdAndDelete(req.params.id)
+        const deletePollById = await Poll.findByIdAndDelete(req.params.id)
             .sort({ createdAt: 1 })
             .exec();
 
-            console.log(deletePollById, 'deletePollById 5df66ad30dc0154b63a33d74')
+        console.log(deletePollById, 'deletePollById 5df66ad30dc0154b63a33d74')
         res.status(200);
         res.json({
             data: deletePollById
