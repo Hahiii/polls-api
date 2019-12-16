@@ -27,7 +27,9 @@ router.post('/poll', async function (req, res, next) {
 /* GET all polls */
 router.get('/poll', async function (req, res, next) {
     try {
+        
         const polls = await Poll.find()
+            .where({user:'5df79b6e3b67cb1aa083a9f7'})
             .sort({ createdAt: 1 })
             .exec();
 
