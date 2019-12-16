@@ -32,8 +32,7 @@ router.get('/poll', async function (req, res, next) {
             .where({user:'5df79b6e3b67cb1aa083a9f7'})
             .sort({ modifiedAt: -1 })
             .exec();
-
-        console.log(polls, 'polls')
+            
         res.status(200);
         res.json({
             data: polls
