@@ -4,19 +4,25 @@ const User = require('../routes/models/users');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/finalProject', { useNewUrlParser: true });
 
-let i = 0;
-while (i < 20) {
-  Polls.insertMany([{
-    questions: faker.fake("{{lorem.sentence}}"),
-    anwser: [{
-      text: faker.fake("{{lorem.text}}"),
-      votes: faker.fake("{{random.number}}")
-    }],
-    user: {type: Number, id: User._id},
-    slug: faker.fake("{{lorem.slug}}"),
-    createdBy: faker.fake("{{name.lastName}}, {{name.firstName}}"),
-  }], function (err) {
-  
-  });
-  i++;
+
+async function getUsers() {
+  const users = await User.find();
+  let i = 0;
+  while (i < 20) {
+    Polls.insertMany([{
+      questions: faker.fake("{{lorem.sentence}}"),
+      anwser: [{
+        text: faker.fake("{{lorem.text}}"),
+        votes: faker.fake("{{random.number}}")
+      }],
+      user: users[i]._id,
+      slug: faker.fake("{{lorem.slug}}"),
+      createdBy: faker.fake("{{name.lastName}}, {{name.firstName}}"),
+    }], function (err) {
+
+    });
+    i++;
+  }
 }
+
+getUsers();
