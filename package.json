@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "seed:polls": "node seed/polls.js"
+    "seed:polls": "node seed/polls.js",
+    "seed:users": "node seed/users.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
