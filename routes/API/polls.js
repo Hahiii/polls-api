@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Poll = require('../models/poll');
+const User = require('../models/users');
 
 /* POST create a poll */
 router.post('/poll', async function (req, res, next) {
@@ -75,11 +76,27 @@ router.get('/poll/:id', async function (req, res, next) {
 
 });
 
-/* POST polls By Id */
-router.post('/poll/:id', function (req, res, next) {
-    res.json({
-        data: 'POST polls By Id'
-    })
+/* POST polls By User Id */
+router.post('/poll/:userId', async function (req, res, next) {
+    try {
+        const user = await User.findById(req.params.id).exec();
+        req.body.userObj = user;
+        const pollCreated = new Poll(req.body);
+        pollCreated.save(async function (err) {
+            if (err) return handleError(err);
+            res.status(200);
+            res.json({
+                data: pollCreated
+            });
+        });
+    }
+    catch (err) {
+        res.status(500);
+        res.json({
+            data: "Error getting the polls.!",
+            error: err
+        });
+    }
 });
 
 /* DELETE polls By Id */
