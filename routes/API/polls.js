@@ -80,7 +80,7 @@ router.get('/poll/:id', async function (req, res, next) {
 router.post('/poll/:userId', async function (req, res, next) {
     try {
         const user = await User.findById(req.params.id).exec();
-        req.body.userObj = user;
+        req.body.user = user._id;
         const pollCreated = new Poll(req.body);
         pollCreated.save(async function (err) {
             if (err) return handleError(err);
