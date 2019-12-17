@@ -13,6 +13,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const pollsRouter = require('./routes/API/polls');
 const registrationRouter = require('./routes/API/registration');
+const loginRouter = require('./routes/API/login');
 
 const app = express();
 
@@ -25,5 +26,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', pollsRouter, registrationRouter);
+app.use('/api', pollsRouter, registrationRouter, loginRouter);
 module.exports = app;
