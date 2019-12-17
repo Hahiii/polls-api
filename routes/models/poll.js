@@ -10,6 +10,8 @@ const pollSchema = new mongoose.Schema({
     anwser: [anwserSchema],
     slug: { type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    validation: {type: String},
+    emailsVoted: [],
     createdBy: { type: String },
     deadline: { type: Date },
     createdAt: { type: Date, default: Date.now },
