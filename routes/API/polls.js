@@ -8,7 +8,7 @@ router.post('/poll', async function (req, res, next) {
     try {
         const pollCreated = new Poll(req.body);
         pollCreated.save(function (err) {
-            if (err) return handleError(err);
+            if (err) return console.log(err);
             res.status(200);
             res.json({
                 data: pollCreated
@@ -83,7 +83,7 @@ router.post('/poll/:userId', async function (req, res, next) {
         req.body.user = user._id;
         const pollCreated = new Poll(req.body);
         pollCreated.save(async function (err) {
-            if (err) return handleError(err);
+            if (err) return console.log(err);
             res.status(200);
             res.json({
                 data: pollCreated
