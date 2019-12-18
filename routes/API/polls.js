@@ -26,13 +26,13 @@ router.post('/poll', async function (req, res, next) {
 
 /* GET all polls */
 router.get('/poll', async function (req, res, next) {
+    console.log("hiii");
     try {
-        
         const polls = await Poll.find()
-            .where({user:'5df79b6e3b67cb1aa083a9f7'})
+            .where({ user: '5df79b6e3b67cb1aa083a9f7' })
             .sort({ modifiedAt: -1 })
             .exec();
-            
+
         res.status(200);
         res.json({
             data: polls
@@ -48,7 +48,7 @@ router.get('/poll', async function (req, res, next) {
 });
 
 /* POST vote By Id */
-router.post(' /poll/:id/vote', function (req, res, next) {
+router.post('/poll/:id/vote', function (req, res, next) {
     res.json({
         data: 'POST vote By Id'
     })
@@ -58,10 +58,9 @@ router.post(' /poll/:id/vote', function (req, res, next) {
 router.get('/poll/:id', async function (req, res, next) {
     try {
         const findPollById = await Poll.findById(req.params.id)
-            .sort({ createdAt: 1 })
-            .exec();
-
-        console.log(findPollById, 'pollById')
+        .sort({ createdAt: 1 })
+        .exec();
+                
         res.status(200);
         res.json({
             data: findPollById
