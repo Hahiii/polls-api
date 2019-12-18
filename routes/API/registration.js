@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/users');
 const { hash } = require("../../utils/bc");
+const jwt = require("jsonwebtoken");
+const secret = require("../../secret.json");
 
 /* Admit register */
 router.post('/user/register', async (req, res) => {
@@ -10,6 +12,7 @@ router.post('/user/register', async (req, res) => {
         const hashedPassword = await hash(`${password}`);
         req.body.password = hashedPassword;
         const user = await new User(req.body);
+
         user.save(function (err) {
             if (err) {
                 res.json({
@@ -18,8 +21,22 @@ router.post('/user/register', async (req, res) => {
                 return;
             };
             res.status(200);
+
+            let token = jwt.sign({ username: user.firstname },
+                secret.Secret_KEY,
+                {
+                    expiresIn: '24h'
+                }
+            );
+
+            console.log(token, 'token');
+
             res.json({
-                data: user
+                data: {
+                    // remove pass field before returning the user here
+                    user,
+                    token
+                }
             });
         });
     }
