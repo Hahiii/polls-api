@@ -6,10 +6,9 @@ const { compare } = require("../../utils/bc");
 /* Admit register */
 router.post('/user/login', async (req, res) => {
     try {
-        console.log(req.body.email)
         const user = await User.where({ email: req.body.email })
-        console.log(user[0].password)
         const  data = await compare(req.body.password, user[0].password);
+
         if (data) {
             res.status(200);
             res.json({

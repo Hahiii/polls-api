@@ -1,11 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const Poll = require('../models/poll');
 const User = require('../models/users');
 
 /* POST create a poll */
 router.post('/poll', async function (req, res, next) {
     try {
+
         const pollCreated = new Poll(req.body);
         pollCreated.save(function (err) {
             if (err) return console.log(err);
@@ -26,10 +27,9 @@ router.post('/poll', async function (req, res, next) {
 
 /* GET all polls */
 router.get('/poll', async function (req, res, next) {
-    console.log("hiii");
     try {
         const polls = await Poll.find()
-            .where({ user: '5df79b6e3b67cb1aa083a9f7' })
+
             .sort({ modifiedAt: -1 })
             .exec();
 
@@ -45,13 +45,6 @@ router.get('/poll', async function (req, res, next) {
             error: err
         });
     }
-});
-
-/* POST vote By Id */
-router.post('/poll/:id/vote', function (req, res, next) {
-    res.json({
-        data: 'POST vote By Id'
-    })
 });
 
 /* GET polls By Id */

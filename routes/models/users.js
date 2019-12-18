@@ -6,7 +6,7 @@ const usersSchema = new mongoose.Schema({
     email: { type: String, unique: true, required: true},
     password: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-    mmodifiedAt: { type: Date, default: Date.now }
+    modifiedAt: { type: Date, default: Date.now }
 })
 usersSchema.plugin(uniqueValidator);
 usersSchema.path('firstname').trim()
