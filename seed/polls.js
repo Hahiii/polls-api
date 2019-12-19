@@ -6,22 +6,29 @@ mongoose.connect('mongodb://localhost/finalProject', { useNewUrlParser: true });
 
 
 async function getUsers() {
-  const users = await User.find();
-  let i = 0;
-  while (i < 20) {
-    Polls.insertMany([{
-      questions: faker.fake("{{lorem.sentence}}"),
-      anwser: [{
-        text: faker.fake("{{lorem.text}}"),
-        votes: faker.fake("{{random.number}}")
-      }],
-      user: users[i]._id,
-      slug: faker.fake("{{lorem.slug}}"),
-      createdBy: faker.fake("{{name.lastName}}, {{name.firstName}}"),
-    }], function (err) {
+  try {
+    const users = await User.find();
+    let i = 0;
+    while (i < 20) {
+      Polls.insertMany([{
+        questions: faker.fake("{{lorem.sentence}}"),
+        anwser: [{
+          text: faker.fake("{{lorem.text}}"),
+          votes: faker.fake("{{random.number}}")
+        }],
+        validation: faker.fake("{{lorem.slug}}"),
+        emailsVoted: ['hahi@hahi.com'],
+        user: users[i]._id,
+        slug: faker.fake("{{lorem.slug}}"),
+        createdBy: faker.fake("{{name.lastName}}, {{name.firstName}}"),
+      }], function (err) {
 
-    });
-    i++;
+      });
+      i++;
+    }
+  }
+  catch (err) {
+    console.log(err)
   }
 }
 
