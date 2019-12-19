@@ -20,7 +20,6 @@ router.post('/user/register', async (req, res) => {
                 })
                 return;
             };
-            res.status(200);
 
             let token = jwt.sign({ username: user.firstname },
                 secret.Secret_KEY,
@@ -29,11 +28,9 @@ router.post('/user/register', async (req, res) => {
                 }
             );
 
-            console.log(token, 'token');
-
+            res.status(200);
             res.json({
                 data: {
-                    // remove pass field before returning the user here
                     user,
                     token
                 }

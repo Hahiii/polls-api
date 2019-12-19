@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 /* POST vote By Id */
-router.post('/poll/:id/vote', function (req, res, next) {
+router.post('/user/poll/:id/vote', function (req, res, next) {
     res.json({
         data: 'POST vote By Id'
     })
