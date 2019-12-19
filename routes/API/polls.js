@@ -3,26 +3,7 @@ const router = express.Router();
 const Poll = require('../models/poll');
 const User = require('../models/users');
 const checkToken = require('../../utils/checkToken')
-/* POST create a poll */
-router.post('/poll', checkToken, async function (req, res, next) {
-    try {
-        const pollCreated = new Poll(req.body);
-        pollCreated.save(function (err) {
-            if (err) return console.log(err);
-            res.status(200);
-            res.json({
-                data: pollCreated
-            });
-        });
-    }
-    catch (err) {
-        res.status(500);
-        res.json({
-            data: 'POST create a poll failed',
-            error: err
-        })
-    }
-});
+
 
 /* GET all polls */
 router.get('/poll', checkToken, async function (req, res, next) {
@@ -47,12 +28,9 @@ router.get('/poll', checkToken, async function (req, res, next) {
 });
 
 /* GET polls By Id */
-router.get('/poll/:id', checkToken, async function (req, res, next) {
+router.get('/poll/list/:userId', checkToken, async function (req, res, next) {
     try {
-        const findPollById = await Poll.findById(req.params.id)
-        .sort({ createdAt: 1 })
-        .exec();
-                
+        const findPollById = await Poll.find().where({user:req.params.userId})
         res.status(200);
         res.json({
             data: findPollById
