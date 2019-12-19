@@ -6,10 +6,9 @@ const checkToken = require('../../utils/checkToken')
 
 
 /* GET all polls */
-router.get('/poll', checkToken, async function (req, res, next) {
+router.get('/poll/:id', checkToken, async function (req, res, next) {
     try {
-        const polls = await Poll.find()
-
+        const polls = await Poll.findById(req.params.id)
             .sort({ modifiedAt: -1 })
             .exec();
 
