@@ -10,7 +10,7 @@ const pollsRouter = require('./routes/API/polls');
 const voterRouter = require('./routes/API/voter');
 const registrationRouter = require('./routes/API/registration');
 const loginRouter = require('./routes/API/login');
-const checkToken = require('../../utils/checkToken')
+
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', checkToken, pollsRouter);
-app.use('/api', registrationRouter, loginRouter, voterRouter);
+app.use('/api', pollsRouter, registrationRouter, loginRouter, voterRouter);
+
 
 module.exports = app;

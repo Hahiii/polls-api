@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Poll = require('../models/poll');
 const User = require('../models/users');
-
+const checkToken = require('../../utils/checkToken')
 /* POST create a poll */
-router.post('/poll', async function (req, res, next) {
+router.post('/poll', checkToken, async function (req, res, next) {
     try {
-
         const pollCreated = new Poll(req.body);
         pollCreated.save(function (err) {
             if (err) return console.log(err);
@@ -26,7 +25,7 @@ router.post('/poll', async function (req, res, next) {
 });
 
 /* GET all polls */
-router.get('/poll', async function (req, res, next) {
+router.get('/poll', checkToken, async function (req, res, next) {
     try {
         const polls = await Poll.find()
 
@@ -48,7 +47,7 @@ router.get('/poll', async function (req, res, next) {
 });
 
 /* GET polls By Id */
-router.get('/poll/:id', async function (req, res, next) {
+router.get('/poll/:id', checkToken, async function (req, res, next) {
     try {
         const findPollById = await Poll.findById(req.params.id)
         .sort({ createdAt: 1 })
@@ -70,7 +69,7 @@ router.get('/poll/:id', async function (req, res, next) {
 });
 
 /* POST polls By User Id */
-router.post('/poll/:userId', async function (req, res, next) {
+router.post('/poll/:userId', checkToken, async function (req, res, next) {
     try {
         const user = await User.findById(req.params.userId).exec();
         req.body.user = user._id;
@@ -93,7 +92,7 @@ router.post('/poll/:userId', async function (req, res, next) {
 });
 
 /* DELETE polls By Id */
-router.delete('/poll/:id', async function (req, res, next) {
+router.delete('/poll/:id', checkToken, async function (req, res, next) {
     try {
         const deletePollById = await Poll.findByIdAndDelete(req.params.id)
             .sort({ createdAt: 1 })
@@ -115,7 +114,7 @@ router.delete('/poll/:id', async function (req, res, next) {
 });
 
 /* PUT polls By Id */
-router.put('/poll/:id', function (req, res, next) {
+router.put('/poll/:id', checkToken, function (req, res, next) {
     res.json({
         data: 'PUT polls By Id'
     })
