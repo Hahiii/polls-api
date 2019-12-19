@@ -65,7 +65,6 @@ router.get('/poll/:id', checkToken, async function (req, res, next) {
             error: err
         });
     }
-
 });
 
 /* POST polls By User Id */
