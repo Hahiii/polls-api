@@ -27,12 +27,11 @@ router.post('/user/register', async (req, res) => {
                     expiresIn: '24h'
                 }
             );
-
             res.status(200);
             res.json({
                 data: {
-                    user,
-                    token
+                    userId: user._id,
+                    token:token
                 }
             });
         });
