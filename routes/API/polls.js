@@ -29,7 +29,7 @@ router.get('/poll/:id', checkToken, async function (req, res, next) {
 /* GET polls By Id */
 router.get('/poll/list/:userId', checkToken, async function (req, res, next) {
     try {
-        const findPollById = await Poll.find().where({user:req.params.userId})
+        const findPollById = await Poll.find().where({ user: req.params.userId })
         res.status(200);
         res.json({
             data: findPollById
@@ -49,20 +49,23 @@ router.post('/poll/:userId', checkToken, async function (req, res, next) {
     try {
         const user = await User.findById(req.params.userId).exec();
         req.body.user = user._id;
-        const pollCreated = new Poll(req.body);
-        pollCreated.save(async function (err) {
-            if (err) return console.log(err);
-            res.status(200);
-            res.json({
-                data: pollCreated
-            });
+        const pollCreated = await new Poll(req.body)
+            .save();
+console.log(pollCreated)
+        
+        res.status(200);
+        res.json({
+            data: pollCreated
         });
+
     }
     catch (err) {
+        console.log(err)
         res.status(500);
         res.json({
-            data: "Error getting the polls.!",
-            error: err
+            data: {
+                error: err.errors
+            }
         });
     }
 });
@@ -70,7 +73,7 @@ router.post('/poll/:userId', checkToken, async function (req, res, next) {
 /* DELETE polls By Id */
 router.delete('/poll/delete/:id', checkToken, async function (req, res, next) {
     try {
-        const deletePollById = await Poll.findByIdAndDelete(req.params.id).exec(); 
+        const deletePollById = await Poll.findByIdAndDelete(req.params.id).exec();
         const newPollData = await Poll.findById(deletePollById.user).exec();
 
         res.status(200);
