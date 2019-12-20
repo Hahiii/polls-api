@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+
 const usersSchema = new mongoose.Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
@@ -8,6 +9,7 @@ const usersSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     modifiedAt: { type: Date, default: Date.now }
 })
+
 usersSchema.plugin(uniqueValidator);
 usersSchema.path('firstname').trim()
 usersSchema.path('lastname').trim()
