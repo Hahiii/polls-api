@@ -14,7 +14,11 @@ const loginRouter = require('./routes/API/login');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/finalProject', { useNewUrlParser: true });
+console.log(process.env.MONGODB_URI, '---------------------------->')
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+.catch(error => console.log(error, '#########################'));
+
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
