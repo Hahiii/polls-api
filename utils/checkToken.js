@@ -1,5 +1,6 @@
 let jwt = require('jsonwebtoken');
-const secret = process.env.SECRET ? process.env.SECRET : require("../secret.json");
+const localSecret = require("../secret.json");
+let secret = process.env.SECRET ? process.env.SECRET : localSecret.Secret_KEY;
 
 let checkToken = async (req, res, next) => {
     let token = req.headers['auth'];
@@ -10,7 +11,7 @@ let checkToken = async (req, res, next) => {
 
     if (token) {
         token = token.slice(7, token.length);
-        const isValid = await jwt.verify(token, secret.Secret_KEY);
+        const isValid = await jwt.verify(token, secret);
 
 
         if (!isValid) {

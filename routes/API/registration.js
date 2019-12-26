@@ -3,7 +3,8 @@ var router = express.Router();
 const User = require('../models/users');
 const { hash } = require("../../utils/bc");
 const jwt = require("jsonwebtoken");
-const secret = process.env.SECRET ? process.env.SECRET : require("../../secret.json");
+const localSecret = require("../../secret.json");
+let secret = process.env.SECRET ? process.env.SECRET : localSecret.Secret_KEY;
 
 /* Admit register */
 router.post('/user/register', async (req, res) => {
@@ -22,7 +23,7 @@ router.post('/user/register', async (req, res) => {
             };
 
             let token = jwt.sign({ username: user.firstname },
-                secret.Secret_KEY,
+                secret,
                 {
                     expiresIn: '24h'
                 }
