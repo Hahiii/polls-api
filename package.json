@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "MONGODB_URI='mongodb+srv://nora:abc@cluster0-1tvks.mongodb.net/test?retryWrites=true&w=majority' node ./bin/www",
     "seed:polls": "node seed/polls.js",
     "seed:users": "node seed/users.js"
   },
