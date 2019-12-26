@@ -11,6 +11,15 @@ router.post('/user/login', async (req, res) => {
         const user = await User.find()
             .where({ email: req.body.email })
             .exec();
+        if (!user.length) {
+            res.status(403);
+            res.json({
+                data: {
+                    error: "error"
+                }
+            });
+            return;
+        }
         const data = await compare(req.body.password, user[0].password);
 
         if (data) {
@@ -25,20 +34,25 @@ router.post('/user/login', async (req, res) => {
             res.json({
                 data: {
                     userId: user[0]._id,
-                    token: token
+                    token: token,
                 }
             });
             return;
         };
         res.status(403);
         res.json({
-            data: data
+            data: {
+                error: "error"
+            }
         });
     }
     catch (error) {
+        console.log(error)
         res.status(500);
         res.json({
-            error: error
+            data: {
+                error: error
+            }
         });
     }
 })
