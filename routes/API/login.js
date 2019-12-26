@@ -3,7 +3,7 @@ var router = express.Router();
 const User = require('../models/users');
 const { compare } = require("../../utils/bc");
 const jwt = require("jsonwebtoken");
-const secret = require("../../secret.json");
+const secret = process.env.SECRET ? process.env.SECRET : require("../../secret.json");
 
 /* Admit register */
 router.post('/user/login', async (req, res) => {

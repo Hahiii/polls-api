@@ -1,5 +1,5 @@
 let jwt = require('jsonwebtoken');
-const secret = require('../secret.json');
+const secret = process.env.SECRET ? process.env.SECRET : require("../secret.json");
 
 let checkToken = async (req, res, next) => {
     let token = req.headers['auth'];
